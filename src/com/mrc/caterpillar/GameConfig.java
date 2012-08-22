@@ -74,7 +74,9 @@ public class GameConfig {
 	public static final int		MAX_SCORES			= 5;
 	public static final int		MAX_CATS			= 4;
 	public static final int		STEP_DELAY_BASE		= 550;	// Base msecs for initial game speed
-	public static final int		MAXTHINK			= 26;
+	public static final int		MAXTHINK			= 25,
+								MAXLEN				= 10,
+								MAXSPEED			= 5;
 	public int					WIDTH, WIDTH_HALF, HEIGHT, XCELLS, YCELLS, XMAXPOS, YMAXPOS,
 								SCREEN_X, SCREEN_Y, XOFFSET, YOFFSET;
 	public double				ASPECT_RATIO;
@@ -125,6 +127,7 @@ public class GameConfig {
 			SEG_SIZE = 32;
 		else
 			SEG_SIZE = 40;
+		PointFactory.init(SEG_SIZE);
 		rem = xSize % SEG_SIZE;
 		if(rem == 0) {
 			xSize -= SEG_SIZE;
@@ -152,10 +155,12 @@ public class GameConfig {
 		YMAXPOS = (HEIGHT - SEG_SIZE) + YOFFSET;
 	}
 
-	// The GUI sets a value from 0 (slow) to 4 (fast).
+	// The GUI sets a value from 0 (slow) to 5 (fast).
 	// Convert this to a time delay in milliseconds
 	public void setGameSpeed() {
 		stepDelay = STEP_DELAY_BASE - (gameSpeed * 100);
+		if(stepDelay <= min_step)
+			stepDelay = min_step;
 	}
 
 	public boolean shouldAccelerate(long ts1, long ts2, long step) {

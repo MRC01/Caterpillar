@@ -21,8 +21,7 @@ import android.content.res.*;
 public class Cat {
 	// cat static resources (images, sounds)
 	public static class Resource {
-		public Bitmap[]	headImg;
-		public Bitmap	segImg;
+		public Bitmap[]	headImg, segImg;
 		public Sound	soundEat, soundGrow;
 	}
 
@@ -30,16 +29,41 @@ public class Cat {
 	static Random		ourRand;
 
 	// WARNING: you must call this before you instantiate the class
+	public static void initResources(AssetManager am)
+			throws IOException {
+		if(ourResources == null) {
+			ourRand = new Random();
+			ourResources = new Resource[4];
+			for(int i = 0; i < 4; i++) {
+				Bitmap	bm;
+				ourResources[i] = new Resource();
+				ourResources[i].headImg = new Bitmap[4];
+				ourResources[i].segImg = new Bitmap[4];
+				for(int j = 0; j < 4; j++) {
+					bm = Util.getBitmap("head" + i + "-" + j + ".png", am);
+					ourResources[i].headImg[j] = bm;
+					bm = Util.getBitmap("seg" + i + "-" + j + ".png", am);
+					ourResources[i].segImg[j] = bm;
+				}
+				ourResources[i].soundEat = new Sound("eatApple" + i + ".mp3",
+						1.0F, am);
+				ourResources[i].soundGrow = new Sound("grow" + i + ".mp3",
+						1.0F, am);
+			}
+		}
+	}
+
 	public static void adjustResources() {
 		if(ourResources != null) {
 			for(int j = 0; j < 4; j++) {
-				ourResources[j].segImg = Util.resizeBitmap(
-						ourResources[j].segImg,
-						CaterpillarMain.gameCfg.SEG_SIZE);
-				for(int i = 0; i < 4; i++)
+				for(int i = 0; i < 4; i++) {
 					ourResources[j].headImg[i] = Util.resizeBitmap(
 							ourResources[j].headImg[i],
 							CaterpillarMain.gameCfg.SEG_SIZE);
+					ourResources[j].segImg[i] = Util.resizeBitmap(
+							ourResources[j].segImg[i],
+							CaterpillarMain.gameCfg.SEG_SIZE);
+				}
 			}
 		}
 	}
@@ -48,43 +72,14 @@ public class Cat {
 		if(ourResources != null) {
 			ourRand = null;
 			for(int i = 0; i < 4; i++) {
-				ourResources[i].segImg.recycle();
-				ourResources[i].segImg = null;
 				for(int j = 0; j < 4; j++) {
 					ourResources[i].headImg[j].recycle();
-					ourResources[i].headImg[j] = null;
+					ourResources[i].segImg[j].recycle();
 				}
 				ourResources[i].soundEat.close();
-				ourResources[i].soundEat = null;
 				ourResources[i].soundGrow.close();
-				ourResources[i].soundGrow = null;
-				ourResources[i] = null;
 			}
 			ourResources = null;
-		}
-	}
-
-	public static void initResources(AssetManager paramAssetManager)
-			throws IOException {
-		if(ourResources == null) {
-			ourRand = new Random();
-			ourResources = new Resource[4];
-			for(int i = 0; i < 4; i++) {
-				ourResources[i] = new Resource();
-				Bitmap localBitmap = Util.getBitmap("seg" + i + ".png",
-						paramAssetManager);
-				ourResources[i].segImg = localBitmap;
-				ourResources[i].headImg = new Bitmap[4];
-				for(int j = 0; j < 4; j++) {
-					localBitmap = Util.getBitmap("head" + i + "-" + j + ".png",
-							paramAssetManager);
-					ourResources[i].headImg[j] = localBitmap;
-				}
-				ourResources[i].soundEat = new Sound("eatApple" + i + ".mp3",
-						1.0F, paramAssetManager);
-				ourResources[i].soundGrow = new Sound("grow" + i + ".mp3",
-						1.0F, paramAssetManager);
-			}
 		}
 	}
 
@@ -107,21 +102,21 @@ public class Cat {
 	// Any node in the cat: body, head or tail (head.next is tail)
 	protected class Node {
 		public Node() {
-			init(0, 0);
+			init(0, 0, Direction.N);
 		}
 
-		public Node(int x, int y) {
-			init(x, y);
+		public Node(int x, int y, Direction dir) {
+			init(x, y, dir);
 		}
 
-		protected void init(int x, int y) {
-			pos = new Point();
-			pos.x = x;
-			pos.y = y;
+		protected void init(int x, int y, Direction d) {
+			pos = PointFactory.self.get(x, y);
+			dir = d;
 		}
 
-		Point	pos;
-		Node	next;
+		Point		pos;
+		Node		next;
+		Direction	dir;
 	}
 
 	// Stack used to keep track of computer thinkahead moves
@@ -145,8 +140,6 @@ public class Cat {
 		gameCfg = CaterpillarMain.gameCfg;
 		// initialize the position stack
 		posStack = new Point[GameConfig.MAXTHINK + 1];
-		for(int i = 0; i < GameConfig.MAXTHINK; i++)
-			posStack[i] = new Point();
 		cfg = _cfg;
 		score = 0;
 		isDead = false;
@@ -154,7 +147,6 @@ public class Cat {
 		// Otherwise it gets created a lot especially during thinkahead moves. 
 		moveStateHit = new MoveState(this);
 		// Create the cat
-		vel = new Point();
 		length = 1;
 		dir = cfg.startDir;
 		growing = cfg.startLength;
@@ -163,17 +155,17 @@ public class Cat {
 		switch(dir) {
 		case N:
 			head = new Node(xMid + gameCfg.SEG_SIZE,
-					(gameCfg.YCELLS - 1) * gameCfg.SEG_SIZE + gameCfg.YOFFSET);
+					(gameCfg.YCELLS - 1) * gameCfg.SEG_SIZE + gameCfg.YOFFSET, Direction.N);
 			break;
 		case S:
-			head = new Node(xMid - gameCfg.SEG_SIZE, gameCfg.YOFFSET);
+			head = new Node(xMid - gameCfg.SEG_SIZE, gameCfg.YOFFSET, Direction.S);
 			break;
 		case E:
-			head = new Node(gameCfg.XOFFSET, yMid - gameCfg.SEG_SIZE);
+			head = new Node(gameCfg.XOFFSET, yMid - gameCfg.SEG_SIZE, Direction.E);
 			break;
 		case W:
 			head = new Node((gameCfg.XCELLS - 1) * gameCfg.SEG_SIZE + gameCfg.XOFFSET,
-					yMid + gameCfg.SEG_SIZE);
+					yMid + gameCfg.SEG_SIZE, Direction.W);
 			break;
 		}
 		head.next = head;
@@ -249,8 +241,8 @@ public class Cat {
 
 		rc = collide();
 		// put the new head's coordinates into the tail
-		head.next.pos.x = head.pos.x + vel.x;
-		head.next.pos.y = head.pos.y + vel.y;
+		head.next.pos = PointFactory.self.getSum(head.pos, vel);
+		head.next.dir = dir;
 		// make head point to what was the tail and is now the head
 		head = head.next;
 		return rc;
@@ -266,9 +258,7 @@ public class Cat {
 
 		rc = collide();
 		// create a new head
-		newSeg = new Node();
-		newSeg.pos.x = head.pos.x + vel.x;
-		newSeg.pos.y = head.pos.y + vel.y;
+		newSeg = new Node(head.pos.x + vel.x, head.pos.y + vel.y, dir);
 		newSeg.next = head.next;
 		// label the new node as the head
 		head = head.next = newSeg;
@@ -279,8 +269,8 @@ public class Cat {
 	}
 
 	/*
-	 * Adjusts the "speed.x" or "speed.y" parameter based on the direction
-	 * parameter. N - north (up), E - east (right), S - south (down), W - west (left)
+	 * Adjusts the "vel" Point based on the direction parameter.
+	 * N - north (up), E - east (right), S - south (down), W - west (left)
 	 */
 	public void turnLeft() {
 		turn(dir.relativeDir(3));
@@ -292,26 +282,7 @@ public class Cat {
 
 	public void turn(Direction newDir) {
 		dir = newDir;
-		switch(newDir) {
-		case N:
-			vel.y = -gameCfg.SEG_SIZE;
-			vel.x = 0;
-			break;
-		case E:
-			vel.x = gameCfg.SEG_SIZE;
-			vel.y = 0;
-			break;
-		case S:
-			vel.y = gameCfg.SEG_SIZE;
-			vel.x = 0;
-			break;
-		case W:
-			vel.x = -gameCfg.SEG_SIZE;
-			vel.y = 0;
-			break;
-		default:
-			break;
-		}
+		vel = PointFactory.self.getVel(dir);
 	}
 
 	/*
@@ -363,12 +334,12 @@ public class Cat {
 		if(cat == null)
 			return MoveState.CLEAR;
 
-		if(pNext.equals(cat.head.pos))
+		if(pNext == cat.head.pos)
 			return cat.moveStateHit;
 
 		seg = cat.head.next;
 		while(seg != cat.head) {
-			if(pNext.equals(seg.pos))
+			if(pNext == seg.pos)
 				return cat.moveStateHit;
 
 			seg = seg.next;
@@ -378,12 +349,12 @@ public class Cat {
 
 	// returns the cat's next position
 	protected Point getNextPos() {
-		return new Point(head.pos.x + vel.x, head.pos.y + vel.y);
+		return PointFactory.self.getSum(head.pos, vel);
 	}
 
 	// Draws a cat segment on the screen.
 	protected void drawSeg(Canvas cvs, Node seg) {
-		cvs.drawBitmap(ourResources[cfg.id].segImg, seg.pos.x, seg.pos.y, null);
+		cvs.drawBitmap(ourResources[cfg.id].segImg[seg.dir.ordinal()], seg.pos.x, seg.pos.y, null);
 	}
 
 	// Draws a cat head on the screen.
@@ -401,8 +372,8 @@ public class Cat {
 	 * direction (N, E, S, W).
 	 */
 	public Direction pickMove() {
-		int			path1, path2, path3;
-		Point		tDelta;
+		int			path1, path2, path3,
+					dx, dy;
 		Direction	choice1, choice2, altDir, back;
 		Target		t;
 
@@ -410,26 +381,27 @@ public class Cat {
 		t = TargetFactory.closest(head.pos);
 		if(t != null) {
 			// There is a target - try to move toward it
-			tDelta = new Point(t.pos.x - head.pos.x, t.pos.y - head.pos.y);
-			if(tDelta.x == 0) {
+			dx = t.pos.x - head.pos.x;
+			dy = t.pos.y - head.pos.y;
+			if(dx == 0) {
 				// target is directly N or S
-				choice1 = (tDelta.y > 0 ? Direction.S : Direction.N);
+				choice1 = (dy > 0 ? Direction.S : Direction.N);
 				choice2 = randomDir(Direction.E, Direction.W);
 			}
-			else if(tDelta.y == 0) {
+			else if(dy == 0) {
 				// target is directly E or W
-				choice1 = (tDelta.x > 0 ? Direction.E : Direction.W);
+				choice1 = (dx > 0 ? Direction.E : Direction.W);
 				choice2 = randomDir(Direction.N, Direction.S);
 			}
 			else {
 				// target is diagonal; randomly pick a direction to step
 				if(ourRand.nextFloat() < 0.5) {
-					choice1 = (tDelta.y > 0 ? Direction.S : Direction.N);
-					choice2 = (tDelta.x > 0 ? Direction.E : Direction.W);
+					choice1 = (dy > 0 ? Direction.S : Direction.N);
+					choice2 = (dx > 0 ? Direction.E : Direction.W);
 				}
 				else {
-					choice1 = (tDelta.x > 0 ? Direction.E : Direction.W);
-					choice2 = (tDelta.y > 0 ? Direction.S : Direction.N);
+					choice1 = (dx > 0 ? Direction.E : Direction.W);
+					choice2 = (dy > 0 ? Direction.S : Direction.N);
 				}
 			}
 			// At this point, choice1 & choice2 must be different
@@ -521,24 +493,9 @@ public class Cat {
 		MoveState	ms;
 		int			path1, path2, path3;
 
-		posTest = new Point();
-		vecNew = new Point();
-		switch(dirNew) {
-		case N:
-			vecNew.set(0, -gameCfg.SEG_SIZE);
-			break;
-		case E:
-			vecNew.set(gameCfg.SEG_SIZE, 0);
-			break;
-		case S:
-			vecNew.set(0, gameCfg.SEG_SIZE);
-			break;
-		case W:
-			vecNew.set(-gameCfg.SEG_SIZE, 0);
-			break;
-		}
+		vecNew = PointFactory.self.getVel(dirNew);
 		// IF THE POINT IN QUESTION IS BLOCKED, RETURN IMMEDIATELY
-		posTest.set(posBase.x + vecNew.x, posBase.y + vecNew.y);
+		posTest = PointFactory.self.getSum(posBase, vecNew);
 		ms = collide(posTest);
 		if(ms.isDead())
 			return cfg.thinkAhead - level + 1;
@@ -553,12 +510,12 @@ public class Cat {
 		// NOTE: it takes at least 3 moves to bump into self.
 		if(level <= cfg.thinkAhead - 3) {
 			for(int i = level + 3; i <= cfg.thinkAhead; i++) {
-				if(posTest.equals(posStack[i]))
+				if(posTest == posStack[i])
 					return cfg.thinkAhead - level + 1;
 			}
 		}
 		// ADD OUR POSITION TO THE "THINK AHEAD" MOVE STACK
-		posStack[level].set(posTest.x, posTest.y);
+		posStack[level] = posTest;
 		// RECURSIVELY BRANCH IN EACH OF THE THREE VALID DIRECTIONS,
 		// KEEPING TRACK OF HOW LONG EACH BRANCH GOES
 		if((path1 = isBlocked(posTest, dirBase, dirBase, level - 1)) == 0)

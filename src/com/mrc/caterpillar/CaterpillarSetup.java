@@ -77,8 +77,14 @@ public class CaterpillarSetup extends Activity {
 		gameCfg.ctrlOption = CtrlOption.values()[ctrlOption.getSelectedItemPosition()];
 		gameCfg.ctrlInput = CtrlInput.values()[ctrlInput.getSelectedItemPosition()];
 		gameCfg.catLen = catLen.getProgress();
+		if(gameCfg.catLen >= gameCfg.MAXLEN)
+			gameCfg.catLen = gameCfg.MAXLEN;
 		gameCfg.catThink = catThink.getProgress();
+		if(gameCfg.catThink >= gameCfg.MAXTHINK)
+			gameCfg.catThink = gameCfg.MAXTHINK;
 		gameCfg.gameSpeed = gameSpeed.getProgress();
+		if(gameCfg.gameSpeed >= gameCfg.MAXSPEED)
+			gameCfg.gameSpeed = gameCfg.MAXSPEED;
 	}
 
 	public void butReturn(View paramView) {

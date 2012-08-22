@@ -42,7 +42,7 @@ public class TargetFactory {
 	// return which target the given Point hits (null if none)
 	public static Target hit(Point pos) {
 		for(Target t : targets)
-			if(pos.equals(t.pos))
+			if(pos == t.pos)
 				return t;
 		return null;
 	}
@@ -116,11 +116,21 @@ public class TargetFactory {
 
 	// returns the target closest to the given position (null if none)
 	public static Target closest(Point pos) {
-		if(targets.isEmpty())
-			return null;
-		return targets.get(0);
+		Target	rc;
+		int		dis, disMin;
+		
+		rc = null;
+		disMin = Integer.MAX_VALUE;
+		for(Target t : targets) {
+			dis = Math.abs(t.pos.x - pos.x) + Math.abs(t.pos.y - pos.y);
+			if(dis < disMin) {
+				disMin = dis;
+				rc = t;
+			}
+		}
+		return rc;
 	}
-	
+
 	// draw all targets
 	public static void drawAll(Canvas cvs) {
 		for(Target t : targets)

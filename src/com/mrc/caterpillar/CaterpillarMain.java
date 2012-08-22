@@ -60,7 +60,7 @@ public class CaterpillarMain extends Activity {
     			WindowManager.LayoutParams.FLAG_FULLSCREEN,
     			WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-        // Init resources & load high scores
+        // Init resources, load high scores, etc.
 		try {
 			initResources();
 		}

@@ -23,7 +23,7 @@ public class TargetClock extends Target {
 	protected static Sound			ourStartSound, ourEatSound;
 
 	// WARNING: you must call this before you instantiate the class
-	static public void initResources(AssetManager am) throws IOException {
+	public static void initResources(AssetManager am) throws IOException {
 		if(ourImgDefault == null) {
 			ourImgDefault = Util.getBitmap(imageFilename, am);
 			ourStartSound = new Sound(soundStartFilename, (float)1.0, am);

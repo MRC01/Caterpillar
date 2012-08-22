@@ -15,7 +15,7 @@ import android.content.res.*;
  * call play() to play it, close() to free its resources.
 */
 public class Sound {
-	static protected SoundPool	ourPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
+	static protected SoundPool	ourPool = new SoundPool(12, AudioManager.STREAM_MUSIC, 0);
 	static final float			VOL_DEFAULT = (float)1.0;
 
 	protected AssetFileDescriptor	fDes;

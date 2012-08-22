@@ -15,13 +15,13 @@ import android.graphics.*;
 public class TargetApple extends Target {
 	protected static final int		MAX_POINTS = 20;
 	protected static final String	imageFilename = "apple.png",
-									soundFilename = "apple.mp3";
+									soundFilename = "appearPop.mp3";
 	protected static int			instanceCount = 0;
 	protected static Bitmap			ourImgDefault;
 	protected static Sound			ourStartSound;
 
 	// WARNING: you must call this before you instantiate the class
-	static public void initResources(AssetManager am) throws IOException {
+	public static void initResources(AssetManager am) throws IOException {
 		if(ourImgDefault == null) {
 			ourImgDefault = Util.getBitmap(imageFilename, am);
 			ourStartSound = new Sound(soundFilename, (float)1.0, am);
@@ -53,7 +53,7 @@ public class TargetApple extends Target {
 		cat.growing += points;
 	}
 	
-	protected static void countZero() {
+	public static void countZero() {
 		instanceCount = 0;
 	}
 	

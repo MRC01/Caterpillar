@@ -62,7 +62,7 @@
         />
         <SeekBar android:id="@id/catLen"
         	android:layout_width="0.0dip"
-        	android:max="10"
+        	android:max="11"
         	android:progress="5"
         	android:layout_weight="3.0"
         />

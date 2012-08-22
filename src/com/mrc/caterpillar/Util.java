@@ -75,7 +75,7 @@ public class Util {
 	}
 
 	public static Point randomPos() {
-		return new Point(
+		return PointFactory.self.get(
 			(int)(Math.random()*CaterpillarMain.gameCfg.XCELLS) * CaterpillarMain.gameCfg.SEG_SIZE + CaterpillarMain.gameCfg.XOFFSET,
 			(int)(Math.random()*CaterpillarMain.gameCfg.YCELLS) * CaterpillarMain.gameCfg.SEG_SIZE + CaterpillarMain.gameCfg.YOFFSET);
 	}

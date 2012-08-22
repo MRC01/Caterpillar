@@ -6,8 +6,16 @@ package com.mrc.caterpillar;
 
 import android.graphics.*;
 
-/* This class represents any target that the caterpillars can eat and manages all targets.
- * Each particular target is a subclass.
+/* This is the base class for all targets that the caterpillars can eat.
+ * Each subclass must have the following methods:
+ * -- These methods initialize resources, adjust them to the screen size, and release them.
+ * public static void initResources(AssetManager am) throws IOException
+ * public static void adjustResources()
+ * public static void freeResources()
+ * -- These methods adjust the instance count
+ * public static void countZero()
+ * protected void countInc()
+ * protected void countDec()
 */
 public abstract class Target {
 	static GameConfig	gameCfg;
