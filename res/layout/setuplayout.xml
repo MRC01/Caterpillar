@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:stretchColumns="1"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableRow>
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Caterpillar 1"
+        	android:layout_weight="1.0"
+        	style="@style/bigText.ColorCat1"
+        />
+        <Spinner android:id="@id/catType1"
+        	android:entries="@array/cat_options"
+        	android:layout_width="0.0dip"
+        	android:layout_weight="1.0"
+        	style="@style/bigText.ColorCat1"
+        />
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Caterpillar 2"
+        	android:layout_weight="1.0"
+        	style="@style/bigText.ColorCat2"
+        />
+        <Spinner android:id="@id/catType2"
+        	android:entries="@array/cat_options"
+        	android:layout_width="0.0dip"
+        	android:layout_weight="1.0"
+        	style="@style/bigText.ColorCat2"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Caterpillar 3"
+        	android:layout_weight="1.0"
+        	style="@style/bigText.ColorCat3"
+        />
+        <Spinner android:id="@id/catType3"
+			android:entries="@array/cat_options"
+			android:layout_width="0.0dip"
+			android:layout_weight="1.0"
+			style="@style/bigText.ColorCat3"
+		/>
+        <TextView
+			android:layout_width="0.0dip"
+			android:text="Caterpillar 4"
+			android:layout_weight="1.0"
+			style="@style/bigText.ColorCat4"
+		/>
+        <Spinner android:id="@id/catType4"
+        	android:entries="@array/cat_options"
+        	android:layout_width="0.0dip"
+        	android:layout_weight="1.0"
+        	style="@style/bigText.ColorCat4"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Length"
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <SeekBar android:id="@id/catLen"
+        	android:layout_width="0.0dip"
+        	android:max="10"
+        	android:progress="5"
+        	android:layout_weight="3.0"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Intelligence"
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <SeekBar android:id="@id/catThink"
+        	android:layout_width="0.0dip"
+        	android:max="26"
+        	android:progress="15"
+        	android:layout_weight="3.0" />
+    </TableRow>
+    <TableRow>
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Speed"
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <SeekBar android:id="@id/gameSpeed"
+        	android:layout_width="0.0dip"
+        	android:max="6"
+        	android:progress="4"
+        	android:layout_weight="3.0"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Control Input"
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <Spinner android:id="@id/ctrlInput"
+        	android:entries="@array/ctrl_inputs"
+        	android:layout_width="0.0dip"
+        	android:layout_weight="2.0"
+        	style="@style/bigText"
+        />
+        <TextView
+        	android:layout_width="0.0dip"
+        	android:text="Control Option"
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <Spinner android:id="@id/ctrlOption"
+        	android:entries="@array/ctrl_types"
+        	android:layout_width="0.0dip"
+        	android:layout_weight="2.0"
+        	style="@style/bigText"
+        />
+    </TableRow>
+    <TableRow>
+        <Button
+        	android:layout_width="0.0dip"
+        	android:text="Return"
+        	android:layout_weight="2.0"
+        	android:onClick="butReturn"
+        	style="@style/bigText.Black"
+        />
+    </TableRow>
+</TableLayout>

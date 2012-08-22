@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="score1score">false</item>
+    <item type="id" name="score1name">false</item>
+    <item type="id" name="score1date">false</item>
+    <item type="id" name="score2score">false</item>
+    <item type="id" name="score2name">false</item>
+    <item type="id" name="score2date">false</item>
+    <item type="id" name="score3score">false</item>
+    <item type="id" name="score3name">false</item>
+    <item type="id" name="score3date">false</item>
+    <item type="id" name="score4score">false</item>
+    <item type="id" name="score4name">false</item>
+    <item type="id" name="score4date">false</item>
+    <item type="id" name="score5score">false</item>
+    <item type="id" name="score5name">false</item>
+    <item type="id" name="score5date">false</item>
+    <item type="id" name="catType1">false</item>
+    <item type="id" name="catType2">false</item>
+    <item type="id" name="catType3">false</item>
+    <item type="id" name="catType4">false</item>
+    <item type="id" name="catLen">false</item>
+    <item type="id" name="catThink">false</item>
+    <item type="id" name="gameSpeed">false</item>
+    <item type="id" name="ctrlInput">false</item>
+    <item type="id" name="ctrlOption">false</item>
+    <item type="id" name="namefield">false</item>
+</resources>

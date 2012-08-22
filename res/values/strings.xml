@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- NOTE: must match enum SnakeOption -->	
+	<string-array name="cat_options">
+		<item>None</item>
+		<item>Computer</item>
+		<item>Human</item>
+	</string-array>
+
+	<!-- NOTE: must match enum CtrlInput -->	
+	<string-array name="ctrl_inputs">
+		<item>Swipe</item>
+		<item>Touch</item>
+		<item>Accelerometer</item>
+	</string-array>
+
+	<!-- NOTE: must match enum CtrlOption -->	
+	<string-array name="ctrl_types">
+		<item>Absolute</item>
+		<item>Relative</item>
+	</string-array>
+</resources>

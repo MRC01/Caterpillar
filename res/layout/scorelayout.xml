@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:stretchColumns="1">
+    <TableRow>
+        <TextView
+        	android:gravity="center"
+        	android:layout_width="0.0dip"
+        	android:text="High Scores"
+        	android:layout_weight="1.0"
+        	style="@style/hugeText"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@id/score1score"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/hugeText.Red"
+        />
+        <TextView android:id="@id/score1name"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/hugeText.Red"
+        />
+        <TextView android:id="@id/score1date"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/hugeText.Red"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@id/score2score"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score2name"
+ 	       android:layout_width="0.0dip"
+ 	       android:text=""
+ 	       android:layout_weight="1.0"
+ 	       style="@style/bigText"
+        />
+        <TextView android:id="@id/score2date"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@id/score3score"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score3name"
+        	android:layout_width="0.0dip"
+        	android:text="" 
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score3date"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@id/score4score"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score4name"
+        	android:layout_width="0.0dip"
+        	android:text="" 
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score4date"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:id="@id/score5score"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score5name"
+        	android:layout_width="0.0dip"
+        	android:text="" 
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+        <TextView android:id="@id/score5date"
+        	android:layout_width="0.0dip"
+        	android:text=""
+        	android:layout_weight="1.0"
+        	style="@style/bigText"
+        />
+    </TableRow>
+    <TableRow>
+        <Button
+        	android:layout_width="0.0dip"
+        	android:text="Return"
+        	android:layout_weight="2.0"
+        	android:onClick="butReturn"
+        	style="@style/bigText.Black"
+        />
+    </TableRow>
+</TableLayout>
