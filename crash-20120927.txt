@@ -1,0 +1,35 @@
+java.lang.NullPointerException
+at com.mrc.caterpillar.Util.resizeBitmap(Util.java:55)
+at com.mrc.caterpillar.TargetApple.adjustResources(TargetApple.java:32)
+at com.mrc.caterpillar.CaterpillarMain.adjustResources(CaterpillarMain.java:41)
+at com.mrc.caterpillar.GameBoard.initGame(GameBoard.java:122)
+at com.mrc.caterpillar.GameBoard.run(GameBoard.java:71)
+at java.lang.Thread.run(Thread.java:856)
+
+Crash: Util.resizeBitmap() called on NULL bitmap.
+	bitmap was TargetApple.ourImgDefault
+
+CaterpillarMain.adjustResources() called before initResources()
+	started from GameBoard.run()-initGame()
+
+Where is the GameBoard thread started?
+	from CaterpillarGame.onResume()
+
+Where is the GameBoard thread initialized?
+	from CaterpillarMain.onCreate()
+
+CaterpillarMain is the primary startup activity, so onCreate() is always called at app startup.
+CaterpillerGame is the game activity, started when the user clicks the START button.
+
+Conclusions:
+	It's impossible at startup for adjustResources() to be called before initResources()
+	The only way this crash can happen, is if the resources were de-initialized.
+	Thus, ourImgDefault must have been set to null.
+	But the only place it's set to null, is in TargetApple.freeResources()
+	And that is called only when the entire app is exiting
+
+Where is TargetApple.ourImgDefault set to null?
+	TargetApple.freeResources()
+	called from CaterpillarMain.freeResources()
+	called from CaterpillarMain.onPause(), if isFinishing() is true
+
