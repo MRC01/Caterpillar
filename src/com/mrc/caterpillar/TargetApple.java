@@ -9,6 +9,8 @@ import java.io.IOException;
 import android.content.res.AssetManager;
 import android.graphics.*;
 
+import com.mrc.util.SoundShort;
+
 /* This class represents the yummy Apple that hungry Caterpillars like to eat.
  * It's like TargetLeaf, but grows the caterpillar more, and lasts for a shorter time.
 */
@@ -18,13 +20,13 @@ public class TargetApple extends Target {
 									soundFilename = "appearPop.mp3";
 	protected static int			instanceCount = 0;
 	protected static Bitmap			ourImgDefault;
-	protected static Sound			ourStartSound;
+	protected static SoundShort		ourStartSound;
 
 	// WARNING: you must call this before you instantiate the class
 	public static void initResources(AssetManager am) throws IOException {
 		if(ourImgDefault == null) {
 			ourImgDefault = Util.getBitmap(imageFilename, am);
-			ourStartSound = new Sound(soundFilename, (float)1.0, am);
+			ourStartSound = new SoundShort(soundFilename, (float)1.0, am);
 		}
 	}
 

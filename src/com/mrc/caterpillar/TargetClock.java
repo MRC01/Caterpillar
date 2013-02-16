@@ -9,6 +9,8 @@ import java.io.IOException;
 import android.content.res.AssetManager;
 import android.graphics.*;
 
+import com.mrc.util.SoundShort;
+
 /* This class represents the clock.
  * It appears at a random location, lives for a random length of time,
  * and when eaten it slows down the game.
@@ -20,14 +22,14 @@ public class TargetClock extends Target {
 									soundEatFilename = "clockEat.mp3";
 	protected static int			instanceCount = 0;
 	protected static Bitmap			ourImgDefault;
-	protected static Sound			ourStartSound, ourEatSound;
+	protected static SoundShort		ourStartSound, ourEatSound;
 
 	// WARNING: you must call this before you instantiate the class
 	public static void initResources(AssetManager am) throws IOException {
 		if(ourImgDefault == null) {
 			ourImgDefault = Util.getBitmap(imageFilename, am);
-			ourStartSound = new Sound(soundStartFilename, (float)1.0, am);
-			ourEatSound = new Sound(soundEatFilename, (float)1.0, am);
+			ourStartSound = new SoundShort(soundStartFilename, (float)1.0, am);
+			ourEatSound = new SoundShort(soundEatFilename, (float)1.0, am);
 		}
 	}
 

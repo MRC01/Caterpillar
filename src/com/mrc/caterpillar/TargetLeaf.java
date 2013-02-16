@@ -9,6 +9,8 @@ import java.io.IOException;
 import android.content.res.AssetManager;
 import android.graphics.*;
 
+import com.mrc.util.SoundShort;
+
 /* This class represents the leaf that hungry Caterpillars like to eat.
  * It appears at a random location, lives for a random length of time,
  * and when eaten it grows the Caterpillar a random amount.
@@ -21,13 +23,13 @@ public class TargetLeaf extends Target {
 									soundFilename = "appearPop.mp3";
 	protected static int			instanceCount = 0;
 	protected static Bitmap			ourImgDefault;
-	protected static Sound			ourStartSound;
+	protected static SoundShort		ourStartSound;
 
 	// WARNING: you must call this before you instantiate the class
 	public static void initResources(AssetManager am) throws IOException {
 		if(ourImgDefault == null) {
 			ourImgDefault = Util.getBitmap(imageFilename, am);
-			ourStartSound = new Sound(soundFilename, (float)1.0, am);
+			ourStartSound = new SoundShort(soundFilename, (float)1.0, am);
 		}
 	}
 

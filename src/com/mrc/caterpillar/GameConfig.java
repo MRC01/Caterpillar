@@ -11,14 +11,16 @@ import android.content.res.*;
 import android.graphics.*;
 import android.graphics.Paint.*;
 
+import com.mrc.util.SoundShort;
+
 /* This contains the game state and settings.
  * It's a singleton created by CaterpillarMain and shared by all the classes.
 */
 public class GameConfig {
 	// resources
-	public static Sound		soundSpeedUp;
-	public static Typeface	fontUbuntu;
-	protected static Paint	paintBlack;
+	public static SoundShort	soundSpeedUp;
+	public static Typeface		fontUbuntu;
+	protected static Paint		paintBlack;
 	static {
 		paintBlack = new Paint();
 		paintBlack.setColor(Color.BLACK);
@@ -27,7 +29,7 @@ public class GameConfig {
 
 	static public void initResources(AssetManager am) throws IOException {
 		if(soundSpeedUp == null) {
-			soundSpeedUp = new Sound("speedUp.mp3", (float)0.8, am);
+			soundSpeedUp = new SoundShort("speedUp.mp3", (float)0.8, am);
 			fontUbuntu = Typeface.createFromAsset(am, "ubuntu.ttf");
 		}
 	}

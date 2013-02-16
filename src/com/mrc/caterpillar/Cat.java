@@ -10,6 +10,8 @@ import java.io.*;
 import android.graphics.*;
 import android.content.res.*;
 
+import com.mrc.util.SoundShort;
+
 /* A cat (caterpillar) is a circular linked list of nodes, each
  * representing a segment in the cat's body.
  * The pointers go from tail to head, and Head.next is the tail.
@@ -21,8 +23,8 @@ import android.content.res.*;
 public class Cat {
 	// cat static resources (images, sounds)
 	public static class Resource {
-		public Bitmap[]	headImg, segImg;
-		public Sound	soundEat, soundGrow;
+		public Bitmap[]		headImg, segImg;
+		public SoundShort	soundEat, soundGrow;
 	}
 
 	static Resource[]	ourResources;
@@ -45,9 +47,9 @@ public class Cat {
 					bm = Util.getBitmap("seg" + i + "-" + j + ".png", am);
 					ourResources[i].segImg[j] = bm;
 				}
-				ourResources[i].soundEat = new Sound("eatApple" + i + ".mp3",
+				ourResources[i].soundEat = new SoundShort("eatApple" + i + ".mp3",
 						1.0F, am);
-				ourResources[i].soundGrow = new Sound("grow" + i + ".mp3",
+				ourResources[i].soundGrow = new SoundShort("grow" + i + ".mp3",
 						1.0F, am);
 			}
 		}

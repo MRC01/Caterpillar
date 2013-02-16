@@ -3,6 +3,7 @@
 	<name>Caterpillar</name>
 	<comment></comment>
 	<projects>
+		<project>util</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -30,4 +31,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>util</name>
+			<type>2</type>
+			<location>/dsk2/data/Fish/programs/Android/util/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>
