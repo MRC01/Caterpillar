@@ -13,6 +13,8 @@ import android.media.AudioManager;
 import android.os.*;
 import android.view.*;
 
+import com.mrc.util.SoundLong;
+
 /* This is the game's primary Activity, main screen, and entry point.
  * It is a useful placeholder for game global stuff, like GameConfig.
 */
@@ -20,6 +22,8 @@ public class CaterpillarMain extends Activity {
 	public static GameConfig	gameCfg	= new GameConfig();
 	protected static boolean	resourcesInit = false,
 								resourcesAdjusted = false;
+	protected static String		ourMusicFilename = "sonataK545Mozart.mid";
+	static SoundLong			ourMusic = null;
 
 	protected void initResources() throws IOException {
 		if(!resourcesInit) {
@@ -30,6 +34,7 @@ public class CaterpillarMain extends Activity {
 			TargetApple.initResources(am);
 			TargetLeaf.initResources(am);
 			TargetClock.initResources(am);
+			ourMusic = new SoundLong(ourMusicFilename, (float)0.7, true, am);
 		}
 	}
 
@@ -47,9 +52,10 @@ public class CaterpillarMain extends Activity {
 	protected static void freeResources() {
 		resourcesAdjusted = false;
 		resourcesInit = false;
-		TargetApple.freeResources();
-		TargetLeaf.freeResources();
+		ourMusic.close();
 		TargetClock.freeResources();
+		TargetLeaf.freeResources();
+		TargetApple.freeResources();
 		Cat.freeResources();
 		GameConfig.freeResources();
 	}

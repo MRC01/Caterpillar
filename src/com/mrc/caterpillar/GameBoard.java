@@ -105,6 +105,7 @@ class GameBoard extends SurfaceView implements Runnable {
 			}
 		}
 		// game has ended
+		CaterpillarMain.ourMusic.stop();
 		if((!quit) && (hiScoreIdx >= 0)) {
 			// User got a high score, should enter his name 
 			// NOTE: this opens a dialog activity, which pauses & resumes my parent activity
@@ -120,6 +121,7 @@ class GameBoard extends SurfaceView implements Runnable {
 		gameCfg.initScreen(x, y);
 		gameCfg.setGameSpeed();
 		CaterpillarMain.adjustResources();
+		CaterpillarMain.ourMusic.play();
 	}
 
 	public void startGame() {
